@@ -58,6 +58,7 @@ export default function Filters({ setOpenFilter }: FiltersProps) {
   const [visible, setVisible] = useState<VisibleDataListType>({
     lang: false,
     tech: false,
+    desc: false,
     category: false,
     pricing: false,
     ownership: false

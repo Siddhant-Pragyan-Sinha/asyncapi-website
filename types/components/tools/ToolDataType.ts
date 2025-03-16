@@ -37,19 +37,28 @@ export interface ToolData {
   filters: Filter;
 }
 
+export interface ToolCategory {
+  description: string;
+  toolsList: ToolData[];
+}
+
 export interface ToolsListData {
-  [category: string]: {
-    description: string;
-    toolsList: ToolData[];
+  [category: string]: ToolCategory & {
     elementRef?: React.RefObject<any>;
   };
 }
 
 export interface VisibleDataListType {
-  lang?: boolean;
-  tech?: boolean;
-  desc?: boolean;
+  lang: boolean;
+  tech: boolean;
+  desc: boolean;
   category?: boolean;
   pricing?: boolean;
   ownership?: boolean;
+}
+
+export interface TagItem {
+  name: string;
+  color: string;
+  borderColor: string;
 }
