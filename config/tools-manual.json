@@ -22,6 +22,8 @@
                   "websiteUrl": "https://apitracker.io/specifications/asyncapi"
               },
               "filters": {
+                  "language": "JavaScript",
+                  "technology": ["Node.js", "Liquid"],
                   "categories": ["api", "directory"]
               }
           }
@@ -42,6 +44,7 @@
               },
               "filters": {
                   "language": "Go",
+                  "technology": ["Go"],
                   "categories": ["code-first"]
               }
           },

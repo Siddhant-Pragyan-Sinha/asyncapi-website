@@ -26,8 +26,8 @@ export interface Filter {
   categories: string[];
   hasCommercial?: boolean;
   isAsyncAPIOwner?: boolean;
-  language?: { name: string; color: string; borderColor: string }[];
-  technology?: { name: string; color: string; borderColor: string }[];
+  language?: (string | { name: string; color: string; borderColor: string })[];
+  technology?: (string | { name: string; color: string; borderColor: string })[];
 }
 
 export interface ToolData {
@@ -61,4 +61,9 @@ export interface TagItem {
   name: string;
   color: string;
   borderColor: string;
+}
+export interface ToolLink {
+  repoUrl: string;
+  docsUrl?: string;
+  websiteUrl?: string;
 }

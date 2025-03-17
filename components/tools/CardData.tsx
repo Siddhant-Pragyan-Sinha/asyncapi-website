@@ -47,7 +47,8 @@ export const CardData = ({
     tech: false,
     category: false,
     pricing: false,
-    ownership: false
+    ownership: false,
+    desc: false
   };
   const domNode = useRef<HTMLSpanElement>(null);
 

@@ -98,7 +98,9 @@ export default function ToolsDashboard() {
         if (languages.length) {
           isLanguageTool = false;
           for (const language of languages) {
-            if (tool?.filters?.language && tool.filters.language.find((item) => item.name === language)) {
+            if (tool?.filters?.language && tool.filters.language.find((item) =>
+              typeof item === 'string' ? item === language : item.name === language
+            )) {
               isLanguageTool = true;
             }
           }
@@ -107,7 +109,9 @@ export default function ToolsDashboard() {
         if (technologies.length) {
           isTechnologyTool = false;
           for (const technology of technologies) {
-            if (tool?.filters?.technology && tool.filters.technology.find((item) => item.name === technology)) {
+            if (tool?.filters?.technology && tool.filters.technology.find((item) =>
+              typeof item === 'string' ? item === technology : item.name === technology
+            )) {
               isTechnologyTool = true;
             }
           }

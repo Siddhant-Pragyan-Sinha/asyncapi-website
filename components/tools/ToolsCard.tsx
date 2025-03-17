@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import type { ToolData, VisibleDataListType, ToolCategory, TagItem } from '../../types/components/tools/ToolDataType';
-import { HeadingTypeStyle } from '../../types/typography/Heading';
-import { ParagraphTypeStyle } from '../../types/typography/Paragraph';
+import type { ToolData, VisibleDataListType, ToolCategory, TagItem } from '@/types/components/tools/ToolDataType';
+import { HeadingTypeStyle } from '@/types/typography/Heading';
+import { ParagraphTypeStyle } from '@/types/typography/Paragraph';
 
 // Import both manual and automated tools data
 import ManualData from '../../config/tools-manual.json';
@@ -24,7 +24,7 @@ interface ToolsCardProp {
  * @param {ToolsCardProp} props - Props for the ToolsCard component.
  * @param {ToolData} props.toolData - Data of the tool.
  */
-const combineToolData = () => {
+const combineToolData = (): ToolData[] => {
   const combined: ToolData[] = [];
 
   // Add manual tools
@@ -35,8 +35,16 @@ const combineToolData = () => {
         ...tool,
         filters: {
           ...tool.filters,
-          language: tool.filters?.language ? [{ name: tool.filters.language, color: '#ffffff', borderColor: '#000000' }] : undefined,
-          technology: tool.filters?.technology?.map((tech: string) => ({ name: tech, color: '#ffffff', borderColor: '#000000' }))
+          language: tool.filters?.language ?
+            (Array.isArray(tool.filters.language) ?
+              tool.filters.language :
+              [{ name: tool.filters.language, color: '#ffffff', borderColor: '#000000' }]) :
+            undefined,
+          technology: tool.filters?.technology ?
+            (Array.isArray(tool.filters.technology) ?
+              tool.filters.technology :
+              [{ name: tool.filters.technology, color: '#ffffff', borderColor: '#000000' }]) :
+            undefined
         }
       })));
     }
@@ -50,8 +58,16 @@ const combineToolData = () => {
         ...tool,
         filters: {
           ...tool.filters,
-          language: tool.filters?.language ? [{ name: tool.filters.language, color: '#ffffff', borderColor: '#000000' }] : undefined,
-          technology: tool.filters?.technology?.map((tech: string) => ({ name: tech, color: '#ffffff', borderColor: '#000000' }))
+          language: tool.filters?.language ?
+            (Array.isArray(tool.filters.language) ?
+              tool.filters.language :
+              [{ name: tool.filters.language, color: '#ffffff', borderColor: '#000000' }]) :
+            undefined,
+          technology: tool.filters?.technology ?
+            (Array.isArray(tool.filters.technology) ?
+              tool.filters.technology :
+              [{ name: tool.filters.technology, color: '#ffffff', borderColor: '#000000' }]) :
+            undefined
         }
       })));
     }
@@ -104,206 +120,201 @@ export default function ToolsCard({ toolData }: ToolsCardProp) {
   const hasTechnologyData = tools.some(tool => tool.filters?.technology && tool.filters.technology.length > 0);
 
   return (
-    <div className='flex h-auto flex-col rounded-lg border shadow-md'>
-      {tools.map((tool, index) => (
-        <div key={index} className="w-full">
-          <div className='mb-6 px-6 pt-8'>
-            <div className='flex flex-col gap-2'>
-              <div className='flex w-full justify-between gap-4'>
-                <Heading typeStyle={HeadingTypeStyle.smSemibold}>{tool.title}</Heading>
-                <div
-                  className='size-fit min-w-[5.3rem] rounded-md border border-green-600 bg-green-100 p-1 text-center text-xs text-green-600'
-                  onMouseEnter={() => setVisible({ ...visible, desc: true })}
-                  onMouseLeave={() => setVisible({ ...visible, desc: false })}
-                >
-                  <span className='group relative'>
-                    {tool.filters?.hasCommercial === false ? 'Open Source' : 'Commercial'}
-                    {visible.desc && (
-                      <span className='absolute -left-2/3 top-8 z-10 w-48 -translate-x-12 rounded border border-gray-200 bg-white px-2 py-1 text-left text-gray-700 shadow-md'>
-                        {Data.properties.filters.properties.hasCommercial.description}
-                      </span>
-                    )}
-                  </span>
-                </div>
-              </div>
-              <div className='relative'>
-                <Paragraph typeStyle={ParagraphTypeStyle.sm}>
-                  <span
-                    className={`w-full ${isTruncated ? 'cursor-pointer' : ''}`}
-                    onMouseEnter={() => isTruncated && setShowDescription(true)}
-                  >
-                    <span
-                      ref={descriptionRef}
-                      className={`line-clamp-3 inline-block ${isTruncated && 'after:ml-1 after:content-["..."]'}`}
-                    >
-                      {tool.description}
-                    </span>
-                  </span>
-                </Paragraph>
+    <div className='flex h-auto flex-col rounded-lg border border-gray-200 shadow-md'>
 
-                {showDescription && (
-                  <div
-                    className='absolute top-0 z-10 w-full border border-gray-200 bg-white p-2 shadow-md'
-                    onMouseLeave={() => setShowDescription(false)}
-                  >
-                    <Paragraph typeStyle={ParagraphTypeStyle.sm}>
-                      {tool.description}
-                    </Paragraph>
-                  </div>
+    {tools.map((tool, index) => (
+    <div className='w-full'>
+      <div className='mb-6 px-6 pt-8'>
+        <div className='flex flex-col gap-2'>
+          <div className='flex w-full justify-between gap-4'>
+            <Heading typeStyle={HeadingTypeStyle.smSemibold}>{toolData.title}</Heading>
+            <div
+              className='size-fit min-w-[5.3rem] rounded-md border border-blue-600 bg-blue-100 p-1 text-center text-xs text-blue-600'
+              onMouseEnter={() =>
+                setTimeout(() => {
+                  if (!visible.desc) setVisible({ ...visible, desc: true });
+                }, 400)
+              }
+            >
+              <span
+                className='group relative'
+                onMouseLeave={() =>
+                  setTimeout(() => {
+                    if (visible.desc) setVisible({ ...visible, desc: false });
+                  }, 300)
+                }
+              >
+                {toolData.filters?.hasCommercial === false ? 'Open Source' : 'Commercial'}
+                {visible.desc && (
+                  <span className='absolute -left-2/3 top-8 z-10 w-48 -translate-x-12 rounded border border-gray-200 bg-white px-2 py-1 text-left text-gray-700 shadow-md'>
+                    {Data.properties.filters.properties.hasCommercial.description}
+                  </span>
                 )}
-              </div>
+              </span>
             </div>
           </div>
-          <hr className='mx-6' />
-          <div className='grow flex flex-col'>
-            {(hasLanguageData || hasTechnologyData) ? (
-              <div className='my-6'>
-                {hasLanguageData && (
-                  <div className='mx-6 flex flex-col gap-2'>
-                    <CardData
-                      className='text-sm'
-                      heading='LANGUAGE'
-                      data={Data.properties.filters.properties.language.description}
-                      type='lang'
-                      visible={visible}
-                      setVisible={setVisible}
-                      read={readMore}
-                      setRead={setReadMore}
-                    />
-                {tool.filters?.language && (
-                  <div className='flex gap-2'>
-                    {Array.isArray(tool.filters.language)
-                      ? tool.filters.language.map((item: string | TagItem, index: number) => (
-                          <Tag
-                            key={index}
-                            name={typeof item === 'string' ? item : item.name}
-                            bgColor={typeof item === 'string' ? '#ffffff' : item.color}
-                            borderColor={typeof item === 'string' ? '#000000' : item.borderColor}
-                          />
-                        ))
-                      : <Tag
-                          name={tool.filters.language}
-                          bgColor="#ffffff"
-                          borderColor="#000000"
-                        />
-                    }
-                  </div>
-                )}
+          <div className='relative'>
+            <Paragraph typeStyle={ParagraphTypeStyle.sm}>
+              <span
+                className={`w-full ${isTruncated ? 'cursor-pointer' : ''}`}
+                onMouseEnter={() =>
+                  setTimeout(() => {
+                    if (isTruncated) setShowDescription(true);
+                  }, 500)
+                }
+              >
+                <span
+                  ref={descriptionRef}
+                  className={`line-clamp-3 inline-block ${isTruncated && 'after:ml-1 after:content-["..."]'}`}
+                >
+                  {toolData.description}
+                </span>
+              </span>
+            </Paragraph>
 
-                  </div>
-                )}
-                {hasTechnologyData && (
-                  <div className='mx-6 my-4 flex flex-col gap-2'>
-                    <CardData
-                      className='text-sm'
-                      heading='TECHNOLOGIES'
-                      data={Data.properties.filters.properties.technology.description}
-                      type='tech'
-                      visible={visible}
-                      setVisible={setVisible}
-                      read={readMore}
-                      setRead={setReadMore}
-                    />
-                    <div className='flex flex-wrap gap-2'>
-                    {tool.filters?.technology && (
-                      <div className='flex flex-wrap gap-2'>
-                        {Array.isArray(tool.filters.technology)
-                          ? tool.filters.technology.map((item: string | TagItem, index: number) => (
-                              <Tag
-                                key={index}
-                                name={typeof item === 'string' ? item : item.name}
-                                bgColor={typeof item === 'string' ? '#ffffff' : item.color}
-                                borderColor={typeof item === 'string' ? '#000000' : item.borderColor}
-                              />
-                            ))
-                          : <Tag
-                              name={tool.filters.technology}
-                              bgColor="#ffffff"
-                              borderColor="#000000"
-                            />
-                        }
-                      </div>
-                    )}
-
-                    </div>
-                  </div>
-                )}
+            {showDescription && (
+              <div
+                className='absolute top-0 z-10 w-full border border-gray-300 bg-white p-2 shadow-md'
+                onMouseLeave={() => setShowDescription(false)}
+              >
+                <Paragraph typeStyle={ParagraphTypeStyle.sm} className=''>
+                  {toolData.description}
+                </Paragraph>
               </div>
-            ) : (
-              <div className='relative size-full p-8 text-center text-gray-700'>
-                <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
-                  No further details provided
+            )}
+          </div>
+        </div>
+      </div>
+      <hr className='mx-6' />
+      <div className='grow flex flex-col'>
+        {(hasLanguageData || hasTechnologyData) ? (
+          <div className='my-6'>
+            {hasLanguageData && (
+              <div className='mx-6 flex flex-col gap-2'>
+                <CardData
+                  className='text-sm'
+                  heading='LANGUAGE'
+                  data={Data.properties.filters.properties.language.description}
+                  type='lang'
+                  visible={visible}
+                  setVisible={setVisible}
+                  read={readMore}
+                  setRead={setReadMore}
+                />
+                <div className='flex gap-2'>
+                  {tool.filters?.language &&
+                    tool.filters.language.map((item: string | TagItem, index: number) => (
+                      <Tag
+                        key={index}
+                        name={typeof item === 'string' ? item : item.name}
+                        bgColor={typeof item === 'string' ? '#ffffff' : item.color}
+                        borderColor={typeof item === 'string' ? '#000000' : item.borderColor}
+                      />
+                    ))}
+                </div>
+              </div>
+            )}
+            {toolData.filters.technology?.length !== 0 && (
+              <div className='mx-6 my-4 flex flex-col gap-2'>
+                <CardData
+                  className='text-sm'
+                  heading='TECHNOLOGIES'
+                  data={Data.properties.filters.properties.technology.description}
+                  type='tech'
+                  visible={visible}
+                  setVisible={setVisible}
+                  read={readMore}
+                  setRead={setReadMore}
+                />
+                <div className='flex flex-wrap gap-2'>
+                  {tool.filters?.technology &&
+                    tool.filters.technology.map((item: string | TagItem, index: number) => (
+                      <Tag
+                        key={index}
+                        name={typeof item === 'string' ? item : item.name}
+                        bgColor={typeof item === 'string' ? '#ffffff' : item.color}
+                        borderColor={typeof item === 'string' ? '#000000' : item.borderColor}
+                      />
+                    ))}
                 </div>
               </div>
             )}
           </div>
-          {(tool.links?.repoUrl || tool.links?.websiteUrl || tool.links?.docsUrl) && (
-            <>
-              <hr />
-              <div className='flex'>
-                {tool.links.repoUrl && (
-                  <>
-                    {onGit ? (
-                      <a
-                        className='w-full cursor-pointer border-x px-1 py-6 text-center hover:bg-gray-200 flex items-center justify-center'
-                        href={tool.links.repoUrl}
-                        target='_blank'
-                        rel='noreferrer'
-                        data-testid='ToolsCard-repoUrl'
-                      >
-                        <div className='m-auto flex w-fit gap-2'>
-                          <img src='/img/logos/github-black.svg' alt='GitHub' className='w-5' />
-                          <div className='text-sm text-gray-700'>View Github</div>
-                        </div>
-                      </a>
-                    ) : (
-                      <a
-                        className='w-full cursor-pointer border-x border-gray-200 px-1 py-6 text-center hover:bg-gray-200'
-                        href={tool.links.repoUrl}
-                        target='_blank'
-                        rel='noreferrer'
-                      >
-                        <div className='m-auto flex w-fit gap-2'>
-                          <div className='text-sm text-gray-700'>View Source Code</div>
-                        </div>
-                      </a>
-                    )}
-                  </>
-                )}
-                {tool.links.websiteUrl && (
-                    <a
-                      className='w-full cursor-pointer border-x border-gray-200 px-1 py-6 text-center hover:bg-gray-200 flex items-center justify-center'
-                      href={tool.links.websiteUrl}
-                      target='_blank'
-                      rel='noreferrer'
-                      data-testid='ToolsCard-websiteUrl'
-                    >
-
-                    <div className='m-auto flex w-fit gap-2'>
-                      <img src='/img/illustrations/icons/share.svg' alt='Share' className='w-5' />
-                      <div className='text-sm text-gray-700'>Visit Website</div>
-                    </div>
-                  </a>
-                )}
-                {tool.links.docsUrl && (
+        ) : (
+          <div className='relative size-full p-8 text-center text-gray-700'>
+            <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
+              {' '}
+              No further details provided{' '}
+            </div>
+          </div>
+        )}
+      </div>
+      {(toolData?.links?.repoUrl || toolData?.links?.websiteUrl || toolData?.links?.docsUrl) && (
+        <>
+          <hr className='' />
+          <div className='flex'>
+            {toolData.links.repoUrl && (
+              <>
+                {onGit ? (
                   <a
-                    className='w-full cursor-pointer border-x border-gray-200 px-1 py-6 text-center hover:bg-gray-200 flex items-center justify-center'
-                    href={tool.links.docsUrl}
+                    className='w-full cursor-pointer border-x px-1 py-6 text-center hover:bg-gray-200 flex items-center justify-center'
+                    href={toolData.links.repoUrl}
                     target='_blank'
                     rel='noreferrer'
-                    data-testid='ToolsCard-docsUrl'
+                    data-testid='ToolsCard-repoUrl'
                   >
                     <div className='m-auto flex w-fit gap-2'>
-                      <img src='/img/illustrations/icons/docs-icon.svg' alt='Docs' className='w-5' />
-                      <div className='text-sm text-gray-700'>Visit Docs</div>
+                      <img src='/img/logos/github-black.svg' alt='GitHub' className='w-5' />
+                      <div className='text-sm text-gray-700'>View Github</div>
+                    </div>
+                  </a>
+                ) : (
+                  <a
+                    className='w-full cursor-pointer border-x border-gray-200 px-1 py-6 text-center hover:bg-gray-200'
+                    href={toolData.links.repoUrl}
+                    target='_blank'
+                    rel='noreferrer'
+                  >
+                    <div className='m-auto flex w-fit gap-2'>
+                      <div className='text-sm text-gray-700'>View Source Code</div>
                     </div>
                   </a>
                 )}
-              </div>
-            </>
-          )}
-        </div>
-      ))}
+              </>
+            )}
+            {toolData.links.websiteUrl && (
+              <a
+                className='w-full cursor-pointer border-x border-gray-200 px-1 py-6 text-center hover:bg-gray-300 flex items-center justify-center'
+                href={toolData.links.websiteUrl}
+                target='_blank'
+                rel='noreferrer'
+                data-testid='ToolsCard-websiteUrl'
+              >
+                <div className='m-auto flex w-fit gap-2'>
+                  <img src='/img/illustrations/icons/share.svg' alt='Share' className='w-5' />
+                  <div className='text-sm text-gray-700'>Visit Website</div>
+                </div>
+              </a>
+            )}
+            {toolData.links.docsUrl && (
+              <a
+                className='w-full cursor-pointer border-x border-gray-200 px-1 py-6 text-center hover:bg-gray-300 flex items-center justify-center'
+                href={toolData.links.docsUrl}
+                target='_blank'
+                rel='noreferrer'
+                data-testid='ToolsCard-docsUrl'
+              >
+                <div className='m-auto flex w-fit gap-2'>
+                  <img src='/img/illustrations/icons/docs-icon.svg' alt='Docs' className='w-5' />
+                  <div className='text-sm text-gray-700'>Visit Docs</div>
+                </div>
+              </a>
+            )}
+          </div>
+        </>
+      )}
+    </div>
+    ))}
     </div>
   );
 }
