@@ -1,6 +1,5 @@
 import React from 'react';
-
-import type { ToolsListData } from '@/types/components/tools/ToolDataType';
+import type { CombinedToolData } from '@/types/components/tools/ToolDataType';
 import { HeadingTypeStyle } from '@/types/typography/Heading';
 import { ParagraphTypeStyle } from '@/types/typography/Paragraph';
 
@@ -9,28 +8,27 @@ import Paragraph from '../typography/Paragraph';
 import ToolsCard from './ToolsCard';
 
 interface ToolsListProp {
-  toolsListData: ToolsListData;
+  toolsListData: CombinedToolData; // Use CombinedToolData instead of ToolsListData
 }
 
 /**
- * @description This component displays list of tools.
- *
- * @param {ToolsListProp} props - Props for the ToolsList component.
- * @param {ToolsListData} props.toolsListData - List of Tools.
+ * @description This component displays a categorized list of tools.
  */
 export default function ToolsList({ toolsListData }: ToolsListProp) {
   return (
     <div className='' data-testid='ToolsList-main'>
-      {Object.keys(toolsListData).map((categoryName, index) => {
-        if (toolsListData[categoryName].toolsList.length > 0) {
+      {Object.keys(toolsListData).map((categoryName) => {
+        if (toolsListData[categoryName]?.toolsList?.length > 0) {
           return (
-            <div className='my-8' key={index} id={categoryName} ref={toolsListData[categoryName].elementRef}>
+            <div className='my-8' key={categoryName} id={categoryName}>
               <Heading typeStyle={HeadingTypeStyle.mdSemibold} className='my-2'>
                 {categoryName}
               </Heading>
-              <Paragraph typeStyle={ParagraphTypeStyle.md}>{toolsListData[categoryName].description}</Paragraph>
+              <Paragraph typeStyle={ParagraphTypeStyle.md}>
+                {toolsListData[categoryName].description}
+              </Paragraph>
               <hr className='my-8' />
-              <div className='flex grid-cols-3 flex-col gap-8 lg:grid'>
+              <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'> {/* Fixed grid layout */}
                 {toolsListData[categoryName].toolsList.map((tool, toolIndex) => (
                   <ToolsCard key={toolIndex} toolData={tool} />
                 ))}
@@ -38,7 +36,6 @@ export default function ToolsList({ toolsListData }: ToolsListProp) {
             </div>
           );
         }
-
         return null;
       })}
     </div>

@@ -1,18 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import type { ToolData, VisibleDataListType, ToolCategory, TagItem } from '@/types/components/tools/ToolDataType';
+import type { ToolData, VisibleDataListType, TagItem } from '@/types/components/tools/ToolDataType';
 import { HeadingTypeStyle } from '@/types/typography/Heading';
 import { ParagraphTypeStyle } from '@/types/typography/Paragraph';
 
-// Import both manual and automated tools data
-import ManualData from '../../config/tools-manual.json';
-import AutomatedData from '../../config/tools-automated.json';
+// Import schema data
 import Data from '../../scripts/tools/tools-schema.json';
 
 import Heading from '../typography/Heading';
 import Paragraph from '../typography/Paragraph';
 import { CardData } from './CardData';
-import Tag from './Tags';
+import  Tag from './Tags';
 
 interface ToolsCardProp {
   toolData: ToolData;
@@ -24,61 +22,7 @@ interface ToolsCardProp {
  * @param {ToolsCardProp} props - Props for the ToolsCard component.
  * @param {ToolData} props.toolData - Data of the tool.
  */
-const combineToolData = (): ToolData[] => {
-  const combined: ToolData[] = [];
-
-  // Add manual tools
-  for (const category in ManualData) {
-    const tools = (ManualData as any)[category].toolsList;
-    if (tools) {
-      combined.push(...tools.map((tool: any) => ({
-        ...tool,
-        filters: {
-          ...tool.filters,
-          language: tool.filters?.language ?
-            (Array.isArray(tool.filters.language) ?
-              tool.filters.language :
-              [{ name: tool.filters.language, color: '#ffffff', borderColor: '#000000' }]) :
-            undefined,
-          technology: tool.filters?.technology ?
-            (Array.isArray(tool.filters.technology) ?
-              tool.filters.technology :
-              [{ name: tool.filters.technology, color: '#ffffff', borderColor: '#000000' }]) :
-            undefined
-        }
-      })));
-    }
-  }
-
-  // Add automated tools
-  for (const category in AutomatedData) {
-    const tools = (AutomatedData as any)[category].toolsList;
-    if (tools) {
-      combined.push(...tools.map((tool: any) => ({
-        ...tool,
-        filters: {
-          ...tool.filters,
-          language: tool.filters?.language ?
-            (Array.isArray(tool.filters.language) ?
-              tool.filters.language :
-              [{ name: tool.filters.language, color: '#ffffff', borderColor: '#000000' }]) :
-            undefined,
-          technology: tool.filters?.technology ?
-            (Array.isArray(tool.filters.technology) ?
-              tool.filters.technology :
-              [{ name: tool.filters.technology, color: '#ffffff', borderColor: '#000000' }]) :
-            undefined
-        }
-      })));
-    }
-  }
-
-  return combined;
-};
-
 export default function ToolsCard({ toolData }: ToolsCardProp) {
-  // Use combined data if no specific toolData is provided
-  const data = toolData || combineToolData();
   const [showDescription, setShowDescription] = useState<boolean>(false);
   const [isTruncated, setIsTruncated] = useState<boolean>(false);
   const [readMore, setReadMore] = useState<boolean>(false);
@@ -112,78 +56,73 @@ export default function ToolsCard({ toolData }: ToolsCardProp) {
     ownership: false
   });
 
-  // Handle both single tool and array of tools
-  const tools = Array.isArray(data) ? data : [data];
-
   // Check for language and technology data
-  const hasLanguageData = tools.some(tool => tool.filters?.language && tool.filters.language.length > 0);
-  const hasTechnologyData = tools.some(tool => tool.filters?.technology && tool.filters.technology.length > 0);
+  const hasLanguageData = toolData.filters?.language && toolData.filters.language.length > 0;
+  const hasTechnologyData = toolData.filters?.technology && toolData.filters.technology.length > 0;
 
   return (
     <div className='flex h-auto flex-col rounded-lg border border-gray-200 shadow-md'>
-      {tools.map((tool, index) => (
-        <div className='mb-6 px-6 pt-8' key={index}>
-          <div className='flex flex-col gap-2'>
-            <div className='flex w-full justify-between gap-4'>
-              <Heading typeStyle={HeadingTypeStyle.smSemibold}>{toolData.title}</Heading>
-              <div
-                className='size-fit min-w-[5.3rem] rounded-md border border-green-600 bg-green-100 p-1 text-center text-xs text-green-600'
+      <div className='mb-6 px-6 pt-8'>
+        <div className='flex flex-col gap-2'>
+          <div className='flex w-full justify-between gap-4'>
+            <Heading typeStyle={HeadingTypeStyle.smSemibold}>{toolData.title}</Heading>
+            <div
+              className='size-fit min-w-[5.3rem] rounded-md border border-green-600 bg-green-100 p-1 text-center text-xs text-green-600'
+              onMouseEnter={() =>
+                setTimeout(() => {
+                  if (!visible.desc) setVisible({ ...visible, desc: true });
+                }, 400)
+              }
+            >
+              <span
+                className='group relative'
+                onMouseLeave={() =>
+                  setTimeout(() => {
+                    if (visible.desc) setVisible({ ...visible, desc: false });
+                  }, 300)
+                }
+              >
+                {toolData.filters?.hasCommercial === false ? 'Open Source' : 'Commercial'}
+                {visible.desc && (
+                  <span className='absolute -left-2/3 top-8 z-10 w-48 -translate-x-12 rounded border border-gray-200 bg-white px-2 py-1 text-left text-gray-700 shadow-md'>
+                    {Data.properties.filters.properties.hasCommercial.description}
+                  </span>
+                )}
+              </span>
+            </div>
+          </div>
+          <div className='relative'>
+            <Paragraph typeStyle={ParagraphTypeStyle.sm}>
+              <span
+                className={`w-full ${isTruncated ? 'cursor-pointer' : ''}`}
                 onMouseEnter={() =>
                   setTimeout(() => {
-                    if (!visible.desc) setVisible({ ...visible, desc: true });
-                  }, 400)
+                    if (isTruncated) setShowDescription(true);
+                  }, 500)
                 }
               >
                 <span
-                  className='group relative'
-                  onMouseLeave={() =>
-                    setTimeout(() => {
-                      if (visible.desc) setVisible({ ...visible, desc: false });
-                    }, 300)
-                  }
+                  ref={descriptionRef}
+                  className={`line-clamp-3 inline-block ${isTruncated && 'after:ml-1 after:content-["..."]'}`}
                 >
-                  {toolData.filters?.hasCommercial === false ? 'Open Source' : 'Commercial'}
-                  {visible.desc && (
-                    <span className='absolute -left-2/3 top-8 z-10 w-48 -translate-x-12 rounded border border-gray-200 bg-white px-2 py-1 text-left text-gray-700 shadow-md'>
-                      {Data.properties.filters.properties.hasCommercial.description}
-                    </span>
-                  )}
+                  {toolData.description}
                 </span>
-              </div>
-            </div>
-            <div className='relative'>
-              <Paragraph typeStyle={ParagraphTypeStyle.sm}>
-                <span
-                  className={`w-full ${isTruncated ? 'cursor-pointer' : ''}`}
-                  onMouseEnter={() =>
-                    setTimeout(() => {
-                      if (isTruncated) setShowDescription(true);
-                    }, 500)
-                  }
-                >
-                  <span
-                    ref={descriptionRef}
-                    className={`line-clamp-3 inline-block ${isTruncated && 'after:ml-1 after:content-["..."]'}`}
-                  >
-                    {toolData.description}
-                  </span>
-                </span>
-              </Paragraph>
+              </span>
+            </Paragraph>
 
-              {showDescription && (
-                <div
-                  className='absolute top-0 z-10 w-full border border-gray-200 bg-white p-2 shadow-md'
-                  onMouseLeave={() => setShowDescription(false)}
-                >
-                  <Paragraph typeStyle={ParagraphTypeStyle.sm} className=''>
-                    {toolData.description}
-                  </Paragraph>
-                </div>
-              )}
-            </div>
+            {showDescription && (
+              <div
+                className='absolute top-0 z-10 w-full border border-gray-200 bg-white p-2 shadow-md'
+                onMouseLeave={() => setShowDescription(false)}
+              >
+                <Paragraph typeStyle={ParagraphTypeStyle.sm} className=''>
+                  {toolData.description}
+                </Paragraph>
+              </div>
+            )}
           </div>
         </div>
-      ))}
+      </div>
       <hr className='mx-6' />
       <div className='grow flex flex-col'>
         {(hasLanguageData || hasTechnologyData) ? (
@@ -201,24 +140,23 @@ export default function ToolsCard({ toolData }: ToolsCardProp) {
                   setRead={setReadMore}
                 />
                 <div className='flex gap-2'>
-                  {toolData.filters?.language &&
-                    toolData.filters.language.map((item: string | TagItem, index: number) => (
-                      <Tag
-                        key={index}
-                        name={typeof item === 'string' ? item : item.name}
-                        bgColor={typeof item === 'string' ? '#ffffff' : item.color}
-                        borderColor={typeof item === 'string' ? '#000000' : item.borderColor}
-                      />
-                    ))}
+                  {toolData.filters?.language?.map((item: TagItem, index: number) => (
+                    <Tag
+                      key={index}
+                      name={item.name}
+                      bgColor={item.color}
+                      borderColor={item.borderColor}
+                    />
+                  ))}
                 </div>
               </div>
             )}
-                {toolData.filters.technology?.length !== 0 && (
 
-              <div className='mx-6 my-4 flex flex-col gap-2'>
+            {hasTechnologyData && (
+              <div className='mx-6 mt-4 flex flex-col gap-2'>
                 <CardData
                   className='text-sm'
-                  heading='TECHNOLOGIES'
+                  heading='TECHNOLOGY'
                   data={Data.properties.filters.properties.technology.description}
                   type='tech'
                   visible={visible}
@@ -226,16 +164,15 @@ export default function ToolsCard({ toolData }: ToolsCardProp) {
                   read={readMore}
                   setRead={setReadMore}
                 />
-                <div className='flex flex-wrap gap-2'>
-                  {toolData.filters?.technology &&
-                    toolData.filters.technology.map((item: string | TagItem, index: number) => (
-                      <Tag
-                        key={index}
-                        name={typeof item === 'string' ? item : item.name}
-                        bgColor={typeof item === 'string' ? '#ffffff' : item.color}
-                        borderColor={typeof item === 'string' ? '#000000' : item.borderColor}
-                      />
-                    ))}
+                <div className='flex gap-2'>
+                  {toolData.filters?.technology?.map((item: TagItem, index: number) => (
+                    <Tag
+                      key={index}
+                      name={item.name}
+                      bgColor={item.color}
+                      borderColor={item.borderColor}
+                    />
+                  ))}
                 </div>
               </div>
             )}

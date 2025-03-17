@@ -4,7 +4,6 @@ import { twMerge } from 'tailwind-merge';
 
 import type { Language, Technology, VisibleDataListType } from '@/types/components/tools/ToolDataType';
 
-import tags from '../../config/all-tags.json';
 import ToolFilter, { ToolFilterContext } from '../../context/ToolFilterContext';
 import { categoryList } from '../../scripts/tools/categorylist';
 import Data from '../../scripts/tools/tools-schema.json';
@@ -17,14 +16,18 @@ import Toggle from './Toggle';
 
 interface FiltersProps {
   setOpenFilter: React.Dispatch<React.SetStateAction<boolean>>;
+  languageList: Language[]; // Added prop for languages
+  technologyList: Technology[]; // Added prop for technologies
 }
 
 /**
  * @description This component displays Filters.
  * @param {FiltersProps} props - Props for Filters component.
  * @param {React.Dispatch<React.SetStateAction<boolean>>} props.setOpenFilter - Function to set the state of filter.
+ * @param {Language[]} props.languageList - List of languages from combined tools data.
+ * @param {Technology[]} props.technologyList - List of technologies from combined tools data.
  */
-export default function Filters({ setOpenFilter }: FiltersProps) {
+export default function Filters({ setOpenFilter, languageList, technologyList }: FiltersProps) {
   const router = useRouter();
   // all the filter state variables and functions are extracted from the Context to set filters according to the UI.
   const { isPaid, isAsyncAPIOwner, languages, technologies, categories } = useContext(ToolFilterContext);
@@ -49,10 +52,6 @@ export default function Filters({ setOpenFilter }: FiltersProps) {
     setCheckPaid(isPaid);
     setCheckOwner(isAsyncAPIOwner);
   }, [languages, technologies, categories, isPaid, isAsyncAPIOwner]);
-
-  // contains the list of languages and technologies
-  const languageList = tags.languages as Language[];
-  const technologyList = tags.technologies as Technology[];
 
   // For Showing language, technology and category information
   const [visible, setVisible] = useState<VisibleDataListType>({
