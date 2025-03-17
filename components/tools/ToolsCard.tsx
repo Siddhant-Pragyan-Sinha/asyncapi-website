@@ -121,70 +121,69 @@ export default function ToolsCard({ toolData }: ToolsCardProp) {
 
   return (
     <div className='flex h-auto flex-col rounded-lg border border-gray-200 shadow-md'>
-
-    {tools.map((tool, index) => (
-    <div className='w-full'>
-      <div className='mb-6 px-6 pt-8'>
-        <div className='flex flex-col gap-2'>
-          <div className='flex w-full justify-between gap-4'>
-            <Heading typeStyle={HeadingTypeStyle.smSemibold}>{toolData.title}</Heading>
-            <div
-              className='size-fit min-w-[5.3rem] rounded-md border border-blue-600 bg-blue-100 p-1 text-center text-xs text-blue-600'
-              onMouseEnter={() =>
-                setTimeout(() => {
-                  if (!visible.desc) setVisible({ ...visible, desc: true });
-                }, 400)
-              }
-            >
-              <span
-                className='group relative'
-                onMouseLeave={() =>
-                  setTimeout(() => {
-                    if (visible.desc) setVisible({ ...visible, desc: false });
-                  }, 300)
-                }
-              >
-                {toolData.filters?.hasCommercial === false ? 'Open Source' : 'Commercial'}
-                {visible.desc && (
-                  <span className='absolute -left-2/3 top-8 z-10 w-48 -translate-x-12 rounded border border-gray-200 bg-white px-2 py-1 text-left text-gray-700 shadow-md'>
-                    {Data.properties.filters.properties.hasCommercial.description}
-                  </span>
-                )}
-              </span>
-            </div>
-          </div>
-          <div className='relative'>
-            <Paragraph typeStyle={ParagraphTypeStyle.sm}>
-              <span
-                className={`w-full ${isTruncated ? 'cursor-pointer' : ''}`}
+      {tools.map((tool, index) => (
+        <div className='mb-6 px-6 pt-8' key={index}>
+          <div className='flex flex-col gap-2'>
+            <div className='flex w-full justify-between gap-4'>
+              <Heading typeStyle={HeadingTypeStyle.smSemibold}>{toolData.title}</Heading>
+              <div
+                className='size-fit min-w-[5.3rem] rounded-md border border-green-600 bg-green-100 p-1 text-center text-xs text-green-600'
                 onMouseEnter={() =>
                   setTimeout(() => {
-                    if (isTruncated) setShowDescription(true);
-                  }, 500)
+                    if (!visible.desc) setVisible({ ...visible, desc: true });
+                  }, 400)
                 }
               >
                 <span
-                  ref={descriptionRef}
-                  className={`line-clamp-3 inline-block ${isTruncated && 'after:ml-1 after:content-["..."]'}`}
+                  className='group relative'
+                  onMouseLeave={() =>
+                    setTimeout(() => {
+                      if (visible.desc) setVisible({ ...visible, desc: false });
+                    }, 300)
+                  }
                 >
-                  {toolData.description}
+                  {toolData.filters?.hasCommercial === false ? 'Open Source' : 'Commercial'}
+                  {visible.desc && (
+                    <span className='absolute -left-2/3 top-8 z-10 w-48 -translate-x-12 rounded border border-gray-200 bg-white px-2 py-1 text-left text-gray-700 shadow-md'>
+                      {Data.properties.filters.properties.hasCommercial.description}
+                    </span>
+                  )}
                 </span>
-              </span>
-            </Paragraph>
-
-            {showDescription && (
-              <div
-                className='absolute top-0 z-10 w-full border border-gray-300 bg-white p-2 shadow-md'
-                onMouseLeave={() => setShowDescription(false)}
-              >
-                <Paragraph typeStyle={ParagraphTypeStyle.sm} className=''>
-                  {toolData.description}
-                </Paragraph>
               </div>
-            )}
+            </div>
+            <div className='relative'>
+              <Paragraph typeStyle={ParagraphTypeStyle.sm}>
+                <span
+                  className={`w-full ${isTruncated ? 'cursor-pointer' : ''}`}
+                  onMouseEnter={() =>
+                    setTimeout(() => {
+                      if (isTruncated) setShowDescription(true);
+                    }, 500)
+                  }
+                >
+                  <span
+                    ref={descriptionRef}
+                    className={`line-clamp-3 inline-block ${isTruncated && 'after:ml-1 after:content-["..."]'}`}
+                  >
+                    {toolData.description}
+                  </span>
+                </span>
+              </Paragraph>
+
+              {showDescription && (
+                <div
+                  className='absolute top-0 z-10 w-full border border-gray-200 bg-white p-2 shadow-md'
+                  onMouseLeave={() => setShowDescription(false)}
+                >
+                  <Paragraph typeStyle={ParagraphTypeStyle.sm} className=''>
+                    {toolData.description}
+                  </Paragraph>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      ))}
       <hr className='mx-6' />
       <div className='grow flex flex-col'>
         {(hasLanguageData || hasTechnologyData) ? (
@@ -202,8 +201,8 @@ export default function ToolsCard({ toolData }: ToolsCardProp) {
                   setRead={setReadMore}
                 />
                 <div className='flex gap-2'>
-                  {tool.filters?.language &&
-                    tool.filters.language.map((item: string | TagItem, index: number) => (
+                  {toolData.filters?.language &&
+                    toolData.filters.language.map((item: string | TagItem, index: number) => (
                       <Tag
                         key={index}
                         name={typeof item === 'string' ? item : item.name}
@@ -214,7 +213,8 @@ export default function ToolsCard({ toolData }: ToolsCardProp) {
                 </div>
               </div>
             )}
-            {toolData.filters.technology?.length !== 0 && (
+                {toolData.filters.technology?.length !== 0 && (
+
               <div className='mx-6 my-4 flex flex-col gap-2'>
                 <CardData
                   className='text-sm'
@@ -227,8 +227,8 @@ export default function ToolsCard({ toolData }: ToolsCardProp) {
                   setRead={setReadMore}
                 />
                 <div className='flex flex-wrap gap-2'>
-                  {tool.filters?.technology &&
-                    tool.filters.technology.map((item: string | TagItem, index: number) => (
+                  {toolData.filters?.technology &&
+                    toolData.filters.technology.map((item: string | TagItem, index: number) => (
                       <Tag
                         key={index}
                         name={typeof item === 'string' ? item : item.name}
@@ -313,8 +313,6 @@ export default function ToolsCard({ toolData }: ToolsCardProp) {
           </div>
         </>
       )}
-    </div>
-    ))}
     </div>
   );
 }
