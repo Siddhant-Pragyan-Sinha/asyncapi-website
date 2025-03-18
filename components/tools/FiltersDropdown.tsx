@@ -1,11 +1,12 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import type { Category, Language, Technology } from '@/types/components/tools/ToolDataType';
+import type { Language, Technology } from '@/types/components/tools/ToolDataType';
+import type { CategoryListItem } from '@/types/scripts/tools';
 
 import Checkbox from './Checkbox';
 
-type DataList = Language[] | Technology[] | Category[];
+type DataList = Language[] | Technology[] | CategoryListItem[]; // Fixed type definition
 
 interface FiltersDropdownProps {
   dataList?: DataList;
@@ -14,14 +15,6 @@ interface FiltersDropdownProps {
   className?: string;
 }
 
-/**
- * @description This component displays Filter Dropdown Component.
- *
- * @param {DataList} props.dataList - List of filter options.
- * @param {string[]} props.checkedOptions - List of options that are currently checked.
- * @param {React.Dispatch<React.SetStateAction<string[]>>} props.setCheckedOptions - Function to set check state of options.
- * @param {string} props.className - Additional CSS classes for the component.
- */
 export default function FiltersDropdown({
   dataList = [],
   checkedOptions = [],
@@ -31,7 +24,6 @@ export default function FiltersDropdown({
   const handleClickOption = (option: string) => {
     const isChecked = checkedOptions.includes(option);
     const updatedOptions = isChecked ? checkedOptions.filter((item) => item !== option) : [...checkedOptions, option];
-
     setCheckedOptions(updatedOptions);
   };
 
@@ -42,7 +34,6 @@ export default function FiltersDropdown({
     >
       {dataList.map((data, index) => {
         const checked = checkedOptions.includes(data.name);
-
         return <Checkbox key={index} name={data.name} checked={checked} handleClickOption={handleClickOption} />;
       })}
     </div>

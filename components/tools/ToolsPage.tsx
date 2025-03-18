@@ -1,18 +1,17 @@
 import { useMemo, useState } from 'react';
 import { combineToolData } from './combineToolData';
 import Filters from './Filters';
-import ToolsList from './ToolsList';
+import ToolsDashboard from './ToolsDashboard';
 import type { Language, Technology, CombinedToolData } from '@/types/components/tools/ToolDataType';
 
 /**
- * @description This is the parent component for the Tools page.
- * It combines tool data, extracts unique languages/technologies, and manages filter state.
+ * @description Parent component for the Tools page that manages data and filters.
  */
 const ToolsPage = () => {
-  // Combine manual and automated tool data
+  // Combine tool data once at the parent level
   const toolsData: CombinedToolData = combineToolData();
 
-  // Extract unique languages and technologies
+  // Extract unique languages and technologies for filters
   const { languageList, technologyList } = useMemo(() => {
     const allLanguages = new Set<string>();
     const allTechnologies = new Set<string>();
@@ -30,20 +29,20 @@ const ToolsPage = () => {
     };
   }, [toolsData]);
 
-  // State for managing filter visibility
+  // State for filter panel visibility
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   return (
-    <div>
-      {/* Filters Component */}
+    <div className="tools-page-container">
+      {/* Filters component with dynamic lists */}
       <Filters
         setOpenFilter={setIsFilterOpen}
         languageList={languageList}
         technologyList={technologyList}
       />
 
-      {/* ToolsList Component */}
-      <ToolsList toolsListData={toolsData} />
+      {/* Tools dashboard with pre-combined data */}
+      <ToolsDashboard toolsData={toolsData} />
     </div>
   );
 };

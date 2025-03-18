@@ -1,4 +1,4 @@
-// ToolDataType.ts
+// Remove unused interfaces
 export interface Tag {
   name: string;
   color: string;
@@ -49,11 +49,6 @@ type VisibleDataListType = {
   desc: boolean;
 };
 
-type ToolCategory = {
-  name: string;
-  description: string;
-};
-
 type Language = {
   name: string;
   popularity: number;
@@ -64,5 +59,4 @@ type Technology = {
   type: string;
 };
 
-export default ToolData;
-export type { VisibleDataListType, ToolCategory, Language, Technology };
+export type { VisibleDataListType, Language, Technology };

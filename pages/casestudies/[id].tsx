@@ -42,7 +42,7 @@ const renderContent = (
   allComponents: Record<string, React.ComponentType<any>>,
   level: number
 ): JSX.Element[] => {
-  let typeStyle;
+  let typeStyle: HeadingTypeStyle; // Explicit type annotation
 
   if (level === 0) {
     typeStyle = HeadingTypeStyle.lg;
@@ -90,11 +90,6 @@ const renderContent = (
   });
 };
 
-/**
- * @description Fetches static props for the page.
- * @param {object} params - Parameters object containing the id.
- * @param {string} params.id - The id of the case study..
- */
 export async function getStaticProps({ params }: { params: { id: string } }) {
   const data = CaseStudiesList.filter((p: { id: string }) => p.id === params.id);
   const asyncApiDoc = await readYamlFile(data[0].asyncapi.fullExample);
@@ -124,9 +119,6 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
   };
 }
 
-/**
- * @description Retrieves the static paths for the page.
- */
 export async function getStaticPaths() {
   const paths = CaseStudiesList.map((study: { id: string }) => ({
     params: { id: study.id }

@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Add combineToolData import
+import { combineToolData } from '@/components/tools/combineToolData';
 import ToolsDashboard from '@/components/tools/ToolsDashboard';
 import { HeadingLevel, HeadingTypeStyle } from '@/types/typography/Heading';
 
@@ -15,6 +17,9 @@ import ToolFilter from '../../context/ToolFilterContext';
 export default function ToolsIndex() {
   const description = 'Tools Dashboard for AsyncAPI Initiative';
   const image = '/img/social/tools-dashboard-card.webp';
+
+  // Get combined tools data
+  const toolsData = combineToolData();
 
   return (
     <div>
@@ -38,7 +43,8 @@ export default function ToolsIndex() {
             </Paragraph>
           </div>
           <ToolFilter>
-            <ToolsDashboard />
+            {/* Pass toolsData prop */}
+            <ToolsDashboard toolsData={toolsData} />
           </ToolFilter>
         </div>
       </GenericLayout>
