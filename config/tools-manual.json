@@ -6,11 +6,12 @@
              "title": "API Tracker - AsyncAPI specs",
              "description": "Explore APIs and companies with public AsyncAPI specifications.",
              "links": {
-                 "websiteUrl": "https://apitracker.io/specifications/asyncapi"
+                 "websiteUrl": "https://apitracker.io/specifications/asyncapi",
+                 "repoUrl": "https://github.com/apideck-io"
              },
              "filters": {
-                 "language": "JavaScript",
-                 "technology": ["Node.js", "Liquid"],
+                 "language": ["JavaScript", "TypeScript"],
+                 "technology": ["Node.js"],
                  "categories": ["api", "directory"]
              }
            },
@@ -36,6 +37,7 @@
               "title": "AsyncApi.Net.Generator",
               "description": "Code-first AsyncAPI documentation generator and ui",
               "links": {
+                "websiteUrl": "https://www.asyncapi.com",
                   "repoUrl": "https://github.com/yurvon-screamo/asyncapi.net"
               },
               "filters": {
@@ -49,9 +51,11 @@
               "description": "Tool that translates your AWS EventBridge Schemas into an AsyncAPI document and a web UI.",
               "links": {
                   "websiteUrl": "https://eventbridge-atlas.netlify.app/",
-                  "repoUrl": "https://github.com/boyney123/eventbridge-atlas"
+                  "repoUrl": "https://github.com/boyney123/eventbridge-atlas",
+                  "docsUrl": "https://eventbridge-atlas.netlify.app/docs/motivation"
               },
               "filters": {
+                  "language": "JavaScript",
                   "technology": ["Node.js"],
                   "categories": ["code-first"]
               }
@@ -61,10 +65,12 @@
             "description": "A powerful and easy-to-use Python framework for building asynchronous services interacting with event streams such as Apache Kafka, RabbitMQ and NATS.",
             "links": {
                 "websiteUrl": "https://faststream.airt.ai",
-                "repoUrl": "https://github.com/airtai/FastStream"
+                "repoUrl": "https://github.com/airtai/FastStream",
+                "docsUrl": "https://faststream.airt.ai/0.5/getting-started/contributing/docs/"
             },
             "filters": {
                 "language": "Python",
+                "technology": ["Shell"],
                 "categories": ["code-first", "framework"],
                 "hasCommercial": false
             }
@@ -77,7 +83,7 @@
               },
               "filters": {
                   "language": "Go/Golang",
-                  "technology": ["Go/Golang"],
+                  "technology": ["Shell"],
                   "categories": ["code-first"]
               }
           },
@@ -121,7 +127,8 @@
             "title": "Neuroglia AsyncAPI",
             "description": "A .NET SDK for the Async API specification. Automatically generates and serves AsyncAPI documents based on your code. Includes fluent-builders to create AsyncAPI documents from scratch, and provides a web-based GUI to browse generated documents.",
             "links": {
-                "repoUrl": "https://github.com/neuroglia-io/AsyncApi"
+                "repoUrl": "https://github.com/neuroglia-io/AsyncApi",
+                "websiteUrl": "https://www.asyncapi.com"
             },
             "filters": {
                 "language": "C#",
@@ -133,7 +140,8 @@
               "title": "Saunter",
               "description": "Saunter is an AsyncAPI documentation generator for dotnet. Generates (and hosts) an AsyncAPI schema document from your code.",
               "links": {
-                  "repoUrl": "https://github.com/tehmantra/saunter"
+                  "repoUrl": "https://github.com/tehmantra/saunter",
+                  "websiteUrl": "https://www.asyncapi.com"
               },
               "filters": {
                   "language": "C#",
@@ -147,7 +155,8 @@
               "description": "Automated documentation for async APIs built with Spring Boot. Like Springfox for AsyncAPI. Auto-generates an AsyncAPI document and a web UI.",
               "links": {
                   "websiteUrl": "https://www.springwolf.dev",
-                  "repoUrl": "https://github.com/springwolf/springwolf-core"
+                  "repoUrl": "https://github.com/springwolf/springwolf-core",
+                  "docsUrl": "https://www.springwolf.dev/docs/quickstart"
               },
               "filters": {
                   "language": "Java",
@@ -159,11 +168,12 @@
               "title": "sttp tapir",
               "description": "Library for describing HTTP endpoints, and then interpreting them as a server, client, or documentation",
               "links": {
-                  "websiteUrl": "https://tapir.softwaremill.com/",
-                  "repoUrl": "https://github.com/softwaremill/tapir"
+                  "repoUrl": "https://github.com/softwaremill/tapir",
+                  "docsUrl": "https://tapir.softwaremill.com/en/latest/"
               },
               "filters": {
                   "language": "Scala",
+                  "technology": ["Scala"],
                   "categories": ["code-first"]
               }
           }
@@ -189,7 +199,8 @@
             "title": "MultiAPI Generator",
             "description": "This is a plugin designed to help developers automatizing the creation of code classes from YML files based on AsyncApi and OpenAPI. It is presented in 2 flavours Maven and Gradle",
             "links": {
-                "repoUrl": "https://github.com/sngular/scs-multiapi-plugin"
+                "repoUrl": "https://github.com/sngular/scs-multiapi-plugin",
+                "websiteUrl": "https://www.sngular.com/"
             },
             "filters": {
                 "language": "Java",
@@ -204,6 +215,7 @@
                   "repoUrl": "https://github.com/dalelane/node-red-contrib-plugin-asyncapi"
               },
               "filters": {
+                  "language": "HTML",
                   "technology": ["Node-RED"],
                   "categories": ["code-generator"]
               }
@@ -257,9 +269,12 @@
               "title": "API Tracker - AsyncAPI specs",
               "description": "Explore APIs and companies with public AsyncAPI specifications.",
               "links": {
-                  "websiteUrl": "https://apitracker.io/specifications/asyncapi"
+                  "websiteUrl": "https://apitracker.io/specifications/asyncapi",
+                  "repoUrl": "https://github.com/apideck-io"
               },
               "filters": {
+                  "language": ["JavaScript", "TypeScript"],
+                  "technology": ["Node.js"],
                   "categories": ["api", "directory"]
               }
           },
@@ -321,6 +336,8 @@
                 "docsUrl": "https://docs.bump.sh/help/"
             },
             "filters": {
+                "language": "TypeScript",
+                "technology": ["Node.js"],
                 "categories": ["documentation-generator"],
                 "hasCommercial": true
             }
@@ -354,7 +371,8 @@
               "description": "Automated documentation for async APIs built with Spring Boot. Like Springfox for AsyncAPI. Auto-generates an AsyncAPI document and a web UI.",
               "links": {
                   "websiteUrl": "https://www.springwolf.dev",
-                  "repoUrl": "https://github.com/springwolf/springwolf-core"
+                  "repoUrl": "https://github.com/springwolf/springwolf-core",
+                  "docsUrl": "https://www.springwolf.dev/docs/quickstart"
               },
               "filters": {
                   "language": "Java",
@@ -406,7 +424,8 @@
               "title": "BOATS",
               "description": "Compile your single AsyncAPI file from multiple YAML files with BOATS and with the help of the template engine Nunjucks, plus a many extra helpers to automate much of the donkey work.",
               "links": {
-                  "repoUrl": "https://github.com/j-d-carmichael/boats"
+                  "repoUrl": "https://github.com/j-d-carmichael/boats",
+                  "docsUrl": "https://j-d-carmichael.github.io/boats/#/"
               },
               "filters": {
                   "language": "TypeScript",

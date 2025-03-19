@@ -11,6 +11,7 @@
           "repoUrl": "https://github.com/asyncapi/server-api"
         },
         "filters": {
+          "language": "TypeScript",
           "technology": [
             "Node.js",
             "TypeScript"
@@ -31,6 +32,7 @@
           "repoUrl": "https://github.com/asyncapi/server-api"
         },
         "filters": {
+          "language": "TypeScript",
           "technology": [
             "Node.js",
             "TypeScript"
@@ -95,7 +97,6 @@
         "title": "AsyncAPI.Net",
         "description": "The AsyncAPI.NET SDK contains a useful object model for AsyncAPI documents in .NET along with common serializers to extract raw OpenAPI JSON and YAML documents from the model.",
         "links": {
-          "websiteUrl": "https://github.com/LEGO/AsyncAPI.NET/",
           "repoUrl": "https://github.com/LEGO/AsyncAPI.NET"
         },
         "filters": {
@@ -117,7 +118,6 @@
         "title": "AsyncAPI.Net",
         "description": "The AsyncAPI.NET SDK contains a useful object model for AsyncAPI documents in .NET along with common serializers to extract raw OpenAPI JSON and YAML documents from the model.",
         "links": {
-          "websiteUrl": "https://github.com/LEGO/AsyncAPI.NET/",
           "repoUrl": "https://github.com/LEGO/AsyncAPI.NET"
         },
         "filters": {
@@ -142,10 +142,10 @@
           "repoUrl": "https://github.com/flamewow/nestjs-asyncapi"
         },
         "filters": {
-          "language": "Typescript",
+          "language": "TypeScript",
           "technology": [
             "Node.js",
-            "NestJS"
+            "Nest JS"
           ],
           "categories": [
             "code-first"
@@ -161,10 +161,10 @@
           "repoUrl": "https://github.com/flamewow/nestjs-asyncapi"
         },
         "filters": {
-          "language": "Typescript",
+          "language": "TypeScript",
           "technology": [
             "Node.js",
-            "NestJS"
+            "Nest JS"
           ],
           "categories": [
             "code-first"
@@ -316,7 +316,7 @@
           "websiteUrl": "https://pypi.org/project/asyncapi-python/"
         },
         "filters": {
-          "language": "python",
+          "language": "Python",
           "technology": [
             "amqp"
           ],
@@ -335,7 +335,7 @@
           "websiteUrl": "https://pypi.org/project/asyncapi-python/"
         },
         "filters": {
-          "language": "python",
+          "language": "Python",
           "technology": [
             "amqp"
           ],
@@ -354,6 +354,9 @@
         },
         "filters": {
           "language": "Go/Golang",
+          "technology": [
+            "Go/Golang"
+          ],
           "categories": [
             "code-generator"
           ],
@@ -369,6 +372,9 @@
         },
         "filters": {
           "language": "Go/Golang",
+          "technology": [
+            "Go/Golang"
+          ],
           "categories": [
             "code-generator"
           ],
@@ -435,7 +441,6 @@
         "title": "AsyncAPI.Net",
         "description": "The AsyncAPI.NET SDK contains a useful object model for AsyncAPI documents in .NET along with common serializers to extract raw OpenAPI JSON and YAML documents from the model.",
         "links": {
-          "websiteUrl": "https://github.com/LEGO/AsyncAPI.NET/",
           "repoUrl": "https://github.com/LEGO/AsyncAPI.NET"
         },
         "filters": {
@@ -457,7 +462,6 @@
         "title": "AsyncAPI.Net",
         "description": "The AsyncAPI.NET SDK contains a useful object model for AsyncAPI documents in .NET along with common serializers to extract raw OpenAPI JSON and YAML documents from the model.",
         "links": {
-          "websiteUrl": "https://github.com/LEGO/AsyncAPI.NET/",
           "repoUrl": "https://github.com/LEGO/AsyncAPI.NET"
         },
         "filters": {
@@ -496,9 +500,9 @@
           "repoUrl": "https://github.com/asyncapi/studio"
         },
         "filters": {
+          "language": "TypeScript",
           "technology": [
-            "React JS",
-            "TypeScript"
+            "React JS"
           ],
           "categories": [
             "editor"
@@ -515,9 +519,9 @@
           "repoUrl": "https://github.com/asyncapi/studio"
         },
         "filters": {
+          "language": "TypeScript",
           "technology": [
-            "React JS",
-            "TypeScript"
+            "React JS"
           ],
           "categories": [
             "editor"
@@ -535,7 +539,8 @@
         "title": "AsyncAPI React component",
         "description": "React component for rendering documentation from your specification in real-time in the browser. It also provides a WebComponent and bundle for Angular and Vue",
         "links": {
-          "repoUrl": "https://github.com/asyncapi/asyncapi-react"
+          "repoUrl": "https://github.com/asyncapi/asyncapi-react",
+          "websiteUrl": "https://asyncapi.github.io/asyncapi-react/"
         },
         "filters": {
           "language": "TypeScript",
@@ -554,7 +559,8 @@
         "title": "AsyncAPI React component",
         "description": "React component for rendering documentation from your specification in real-time in the browser. It also provides a WebComponent and bundle for Angular and Vue",
         "links": {
-          "repoUrl": "https://github.com/asyncapi/asyncapi-react"
+          "repoUrl": "https://github.com/asyncapi/asyncapi-react",
+          "websiteUrl": "https://asyncapi.github.io/asyncapi-react/"
         },
         "filters": {
           "language": "TypeScript",
@@ -965,7 +971,6 @@
         "title": "AsyncAPI.Net",
         "description": "The AsyncAPI.NET SDK contains a useful object model for AsyncAPI documents in .NET along with common serializers to extract raw OpenAPI JSON and YAML documents from the model.",
         "links": {
-          "websiteUrl": "https://github.com/LEGO/AsyncAPI.NET/",
           "repoUrl": "https://github.com/LEGO/AsyncAPI.NET"
         },
         "filters": {
@@ -987,7 +992,6 @@
         "title": "AsyncAPI.Net",
         "description": "The AsyncAPI.NET SDK contains a useful object model for AsyncAPI documents in .NET along with common serializers to extract raw OpenAPI JSON and YAML documents from the model.",
         "links": {
-          "websiteUrl": "https://github.com/LEGO/AsyncAPI.NET/",
           "repoUrl": "https://github.com/LEGO/AsyncAPI.NET"
         },
         "filters": {
